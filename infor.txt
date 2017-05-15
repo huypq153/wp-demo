@@ -2,4 +2,4 @@ mathadong.com
 
 admin/H@d0n9
 
-test
+test yes
