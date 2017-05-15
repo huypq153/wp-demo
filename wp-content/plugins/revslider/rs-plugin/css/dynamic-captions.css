@@ -1,0 +1,42 @@
+.tp-caption.image-slide {
+font-size:48px;
+line-height:20px;
+font-weight:700;
+font-family:Roboto, sans-serif;
+color:rgb(255, 255, 255);
+text-decoration:none;
+background-color:transparent;
+padding:2px 4px;
+text-shadow:rgba(0, 0, 0, 0.5) 0px 2px 5px;
+margin:0px;
+white-space:nowrap;
+border-width:0px;
+border-color:rgb(255, 255, 255);
+border-style:none;
+}
+
+.tp-caption.font-slide {
+font-size:40px;
+line-height:20px;
+font-weight:700;
+font-family:Roboto, sans-serif;
+color:#ffffff;
+text-decoration:none;
+background-color:transparent;
+text-shadow:rgba(0, 0, 0, 0.5) 0px 2px 5px;
+margin:0px;
+white-space:nowrap;
+padding:2px 4px 2px 4px;
+border-width:0px;
+border-color:rgb(255, 255, 255);
+border-style:none;
+}
+
+.tp-caption.button {
+text-decoration:none;
+background-color:transparent;
+border-width:0px;
+border-color:rgb(34, 34, 34);
+border-style:none;
+}
+
