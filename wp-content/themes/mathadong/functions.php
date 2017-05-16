@@ -127,6 +127,8 @@ function pqheyedoctor_scripts() {
 	
 	wp_enqueue_style( 'pqheyedoctor-default', get_template_directory_uri()."/assets/admin/layout3/css/themes/default.css");
 	
+	wp_enqueue_style( 'pqheyedoctor-animate', get_template_directory_uri()."/assets/admin/layout3/css/animate.css");
+	
 	wp_enqueue_style( 'pqheyedoctor-basic-style', get_stylesheet_uri() );
 	
 	wp_enqueue_script( 'pqheyedoctor-jquery-min', get_template_directory_uri() . '/assets/global/plugins/jquery.min.js', array(), '20170512' , true);
@@ -158,6 +160,10 @@ function pqheyedoctor_scripts() {
 	wp_enqueue_script( 'pqheyedoctor-layout', get_template_directory_uri() . '/assets/admin/layout3/scripts/layout.js', array(), '20170512', true );
 	
 	wp_enqueue_script( 'pqheyedoctor-demo', get_template_directory_uri() . '/assets/admin/layout3/scripts/demo.js', array(), '20170512', true );
+	
+	wp_enqueue_script( 'pqheyedoctor-viewportchecker', get_template_directory_uri() . '/assets/admin/layout3/scripts/viewportchecker.js', array(), '20170512', true );
+	
+	wp_enqueue_script( 'pqheyedoctor-eye-doctor', get_template_directory_uri() . '/assets/global/scripts/pqh-eye-doctor.js', array(), '20170512', true );
 	
 }
 add_action( 'wp_enqueue_scripts', 'pqheyedoctor_scripts' );

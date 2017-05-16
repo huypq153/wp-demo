@@ -323,164 +323,6 @@ function create_tailieu_post_type() {
 
 add_action( 'init', 'create_tailieu_post_type', 3 );
 
-
-/**
- *  post type News
- */
-######### News
-
-//Creating the Custom Post Type  News
-if ( ! function_exists( 'pqh_news' ) ) {
-
-	// register custom post type
-	function pqh_news() {
-
-		// these are the labels in the admin interface, edit them as you like
-		$labels = array(
-				'name'                => _x( 'Tin tức', 'Post Type General Name', 'pqh_news' ),
-				'singular_name'       => _x( 'Tin tức', 'Post Type Singular Name', 'pqh_news' ),
-				'menu_name'           => __( 'Tin tức', 'pqh_news' ),
-				'parent_item_colon'   => __( 'Parent Item:', 'pqh_news' ),
-				'all_items'           => __( 'All Items', 'pqh_news' ),
-				'view_item'           => __( 'View Item', 'pqh_news' ),
-				'add_new_item'        => __( 'Add New Item', 'pqh_news' ),
-				'add_new'             => __( 'Add New', 'pqh_news' ),
-				'edit_item'           => __( 'Edit Item', 'pqh_news' ),
-				'update_item'         => __( 'Update Item', 'pqh_news' ),
-				'search_items'        => __( 'Search Item', 'pqh_news' ),
-				'not_found'           => __( 'Not found', 'pqh_news' ),
-				'not_found_in_trash'  => __( 'Not found in Trash', 'pqh_news' ),
-		);
-		$args = array(
-				// use the labels above
-				'labels'              => $labels,
-				// we'll only need the title, the Visual editor and the excerpt fields for our post type
-				'supports'            => array( 'title', 'editor', 'excerpt', 'thumbnail'),
-				// we're going to create this taxonomy in the next section, but we need to link our post type to it now
-				'taxonomies'          => array( 'cat-news' ),
-				// make it public so we can see it in the admin panel and show it in the front-end
-				'public'              => true,
-				// show the menu item under the Pages item
-				'menu_position'       => 20,
-				// show archives, if you don't need the shortcode
-				'has_archive'         => true,
-		);
-		register_post_type( 'news', $args );
-
-	}
-
-	// hook into the 'init' action
-	add_action( 'init', 'pqh_news', 4 );
-
-}
-// Creating the Custom Taxonomy
-
-if ( ! function_exists( 'pqh_news_tax' ) ) {
-
-	// register custom taxonomy
-	function pqh_news_tax() {
-
-		// again, labels for the admin panel
-		$labels = array(
-				'name'                       => _x( 'News Categories', 'Taxonomy General Name', 'pqh_news' ),
-				'singular_name'              => _x( 'News Category', 'Taxonomy Singular Name', 'pqh_news' ),
-				'menu_name'                  => __( 'News Categories', 'pqh_news' ),
-				'all_items'                  => __( 'All News Cats', 'pqh_news' ),
-				'parent_item'                => __( 'Parent News Cat', 'pqh_news' ),
-				'parent_item_colon'          => __( 'Parent News Cat:', 'pqh_news' ),
-				'new_item_name'              => __( 'New News Cat', 'pqh_news' ),
-				'add_new_item'               => __( 'Add New News Cat', 'pqh_news' ),
-				'edit_item'                  => __( 'Edit News Cat', 'pqh_news' ),
-				'update_item'                => __( 'Update News Cat', 'pqh_news' ),
-				'separate_items_with_commas' => __( 'Separate items with commas', 'pqh_news' ),
-				'search_items'               => __( 'Search Items', 'pqh_news' ),
-				'add_or_remove_items'        => __( 'Add or remove items', 'pqh_news' ),
-				'choose_from_most_used'      => __( 'Choose from the most used items', 'pqh_news' ),
-				'not_found'                  => __( 'Not Found', 'pqh_news' ),
-		);
-		$args = array(
-				// use the labels above
-				'labels'                     => $labels,
-				// taxonomy should be hierarchial so we can display it like a category section
-				'hierarchical'               => true,
-				// again, make the taxonomy public (like the post type)
-				'public'                     => true,
-		);
-		// the contents of the array below specifies which post types should the taxonomy be linked to
-		register_taxonomy( 'cat-news', array( 'news' ), $args );
-
-	}
-
-	// hook into the 'init' action
-	add_action( 'init', 'pqh_news_tax', 5 );
-
-}
-// Creating the [news] Shortcode
-if ( ! function_exists( 'pqh_news_shortcode' ) ) {
-
-	function td1501_news_shortcode( $atts ) {
-		extract( shortcode_atts(
-				array(
-						// category slug attribute - defaults to blank
-						'category' => '',
-						'num'	=> -1,
-						// full content or excerpt attribute - defaults to full content
-						'excerpt' => 'false',
-				), $atts )
-		);
-			
-		$output = '';
-			
-		// set the query arguments
-		$query_args = array(
-				// show all posts matching this query
-				'posts_per_page'    =>   $num,
-				// show the 'td1501_news' custom post type
-				'post_type'         =>   'news',
-				// show the posts matching the slug of the NEWS category specified with the shortcode's attribute
-				'tax_query'         =>   array(
-						array(
-								'taxonomy'  =>   'pqh_news_tax',
-								'field'     =>   'slug',
-								'terms'     =>   $category,
-						)
-				),
-				// tell WordPress that it doesn't need to count total rows - this little trick reduces load on the database if you don't need pagination
-				'no_found_rows'     =>   true,
-		);
-			
-		// get the posts with our query arguments
-		$news_posts = get_posts( $query_args );
-		$output .= '<div class="pqh-news">';
-			
-		// handle our custom loop
-		foreach ( $news_posts as $post ) {
-			setup_postdata( $post );
-			$faq_item_title = get_the_title( $post->ID );
-			$faq_item_permalink = get_permalink( $post->ID );
-			$faq_item_content = get_the_content();
-			if( $excerpt == 'true' )
-				$faq_item_content = get_the_excerpt() . '<a href="' . $faq_item_permalink . '">' . __( 'More...', 'td1501_news' ) . '</a>';
-
-			$output .= '<div class=pqh-news-item">';
-			$output .= '<h3 class="pqh-news-item-title">' . $faq_item_title . '</h3>';
-			$output .= '<div class="pqh-news-item-content">' . $faq_item_content . '</div>';
-			$output .= '</div>';
-		}
-			
-		wp_reset_postdata();
-			
-		$output .= '</div>';
-			
-		return $output;
-	}
-
-	add_shortcode( 'news', 'pqh_news_shortcode' );
-
-}
-
-######## end News
-
 /**
  *  post view set 
  */
@@ -861,6 +703,98 @@ function get_news_of_category_by_slug( $post_number, $cat_slug ) {
     endif;
  	wp_reset_query();
 }
+
+/**
+ * creat_html_box_category
+ * @param unknown $cat_slug
+ */
+function creat_html_box_category($cat_slug, $title=''){
+	$cat = get_cat_by_slug($cat_slug);
+	if($cat->cat_ID >0){
+		if(empty($title)) $title= $cat->name;
+		$desc = '<p>'.$cat->description.'</p>';
+		$cat_resize_img = aq_resize($cat->img_data['img'],'600px',null, true);
+		$cat_img = '<a class="pull-left" href="/'.$cat->slug.'" title="'.$title.'"><img class="img-responsive" src="'.$cat_resize_img.'" alt="'.$title.'"> </a>';
+		$retVal = '<div class="portlet">
+							<h3>'.$title.'</h3> 
+							<div class="portlet-title-image">						
+								'.$cat_img.'	                                                
+							</div>
+							<div class="portlet-body">
+								'.$desc.'
+							</div>
+					</div>';
+		return $retVal;
+	}
+	return '';
+}
+
+function get_post_by_cat($args, $title) {
+	global $postdate; 
+	$postnum = $args['postnum'];
+	$category = $args['category'];
+	$query_args = array(
+			'posts_per_page' => $postnum,
+			'orderby' => 'date',
+			'order' => 'DESC'
+	);
+	$post_type_arr = array('gioithieu','quytrinh','tailieu','dichvu');
+	if(in_array($category, $post_type_arr)){
+		$query_args['post_type'] = $category;
+	}else{
+		$query_args['category_name'] = $category;
+	}
+	$postview_query = new WP_Query( $query_args );
+// 	if ($postview_query->have_posts() ) :
+// 	while ( $postview_query->have_posts() ) :
+//                 $postview_query->the_post(); ?>
+<!--  				<div class="media"> -->
+					<a class="pull-left" href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
+						<?php 
+// 							if ( has_post_thumbnail() ){
+// 								$thumb = wp_get_attachment_image_src( get_post_thumbnail_id($postview_query->ID), 'thumbnail_size' );
+// 								$url = $thumb['0'];
+// 								$url_resize_img = aq_resize($url,'83px', '63px', true);
+// 								echo '<img class="media-object" src="'.$url_resize_img.'" alt="">';
+// 							}else{
+// 								echo '<img class="media-object" src="http://placehold.it/83x63" alt="">';
+// 							}
+// 						 ?>
+<!-- 					</a> -->
+<!-- 					<div class="media-body" > -->
+						<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>"><?php
+// 	                		if(!empty($text_lenght) && $text_lenght >0 ){
+// 	                			echo short_title($text_after,$text_lenght);
+// 	                		}else{
+// 	                			$subtitle = get_post_meta(get_the_ID(), 'tkx_sub_title', true);
+// 	                			if(isset($subtitle) && !empty($subtitle)) {
+// 	                				echo $subtitle;
+// 	                			}else {
+// 	                				the_title();
+// 	                			}
+// 	                		}
+// 	                		?>
+<!--                 		</a> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+            <?php endwhile;
+//             endif;
+}
+
+/**
+ * get_cat_by_slug
+ * @param unknown $cat_slug
+ * @return Ambigous <object, WP_Term, multitype:, false>
+ */
+
+function get_cat_by_slug($cat_slug){
+	$cat = get_category_by_slug($cat_slug);
+	$cat_ID = $cat->term_id;
+	$cat_data = get_option("category_". $cat_ID);
+	$cat->img_data = $cat_data;
+	return $cat;
+}
+
 
 /**
  * Get objects by post type

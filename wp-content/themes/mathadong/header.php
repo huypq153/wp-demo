@@ -38,28 +38,24 @@
 	                    <div class="col-md-6">
 	                        <div class="tools">
 	                        	<ul class="list-inline-head">
-				                    <li><a href="#"><i class="fa fa-clock-o"></i>Sáng : 7h30-12h00 - Chiều : 13h30 -17h00</a></li>
-				                    <li><a href="http://www.tel.com"><i class="fa fa-phone"></i> 0433 825 059 - 0433 518 215</a></li>
+				                    <li><a href="#"><i class="fa fa-clock-o"></i>Sáng : <b>7h30-12h00</b> - Chiều : <b>13h30 -17h00</b></a></li>
+				                    <li><a href="#"><i class="fa fa-phone"></i> <b>0433 825 059 - 0433 518 215</b></a></li>
 				                </ul>
 	                       		<?php //echo accessibleAnchors('top',"list-inline-head", "");?>
 					        </div>
 	                    </div>
 	                </div>
+	                
 	            </div>
-				<!-- BEGIN LOGO -->
-				<div class="page-logo">
-                    <?php if ( get_theme_mod('pqheyedoctor_logo') != "" ) : ?>
-						<h1 class="site-title logo-container"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home">
-						<img src="<?php echo get_theme_mod('pqheyedoctor_logo'); ?>" class="img-responsive">
-						</a></h1>
-						<?php else : ?>
-						<h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1> 
-						<h2 class="site-description"><?php bloginfo( 'description' ); ?></h2>
-					<?php	
-					endif;
-					?>
-				</div>
-				<!-- END LOGO -->
+	                <div class="page-logo">
+                    	<?php if ( get_theme_mod('pqheyedoctor_logo') != "" ) : ?>
+                    	<h1 class="site-title logo-container">
+						<a class="" href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home">
+						<img src="<?php echo get_theme_mod('pqheyedoctor_logo'); ?>" class="img-responsive center-block">
+						</a>
+						</h1>
+						<?php endif ;?>
+					</div>
 				<!-- BEGIN RESPONSIVE MENU TOGGLER -->
 				<a href="javascript:;" class="menu-toggler"></a>
 				<!-- END RESPONSIVE MENU TOGGLER -->
@@ -75,7 +71,11 @@
 				<!-- END HEADER SEARCH BOX -->
 				<!-- BEGIN MEGA MENU -->
 				<div class="navbar-header">
-                  <a class="navbar-brand" href="index.htm"><img src="assets/images/logo.png" alt=" " class="img-responsive center-block"></a></div>
+                 <?php if ( get_theme_mod('pqheyedoctor_logo') != "" ) : ?>
+				<a class="navbar-brand" href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home">
+				<img src="<?php echo get_theme_mod('pqheyedoctor_logo'); ?>" class="img-responsive center-block">
+				</a>
+				<?php endif ;?>
 				<div class="hor-menu hor-menu-light">
 					<?php //echo accessibleAnchors('primary',"nav navbar-nav", "menu-dropdown mega-menu-dropdown");?>
 					 <?php
