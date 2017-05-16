@@ -71,11 +71,11 @@
 		<div class="page-header-menu">
 			<div class="container">
 				<!-- BEGIN HEADER SEARCH BOX -->
-				<?php get_template_part('template-parts/searchform', ''); ?>
+				<?php //get_template_part('template-parts/searchform', ''); ?>
 				<!-- END HEADER SEARCH BOX -->
 				<!-- BEGIN MEGA MENU -->
-				<!-- DOC: Apply "hor-menu-light" class after the "hor-menu" class below to have a horizontal menu with white background -->
-				<!-- DOC: Remove data-hover="dropdown" and data-close-others="true" attributes below to disable the dropdown opening on mouse hover -->
+				<div class="navbar-header">
+                  <a class="navbar-brand" href="index.htm"><img src="assets/images/logo.png" alt=" " class="img-responsive center-block"></a></div>
 				<div class="hor-menu hor-menu-light">
 					<?php //echo accessibleAnchors('primary',"nav navbar-nav", "menu-dropdown mega-menu-dropdown");?>
 					 <?php
