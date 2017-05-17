@@ -550,10 +550,35 @@ function dimox_breadcrumbs(){
 } // end dimox_breadcrumbs()
 
 /**
+ * Get post of category slider by CatID
+ *
+ */
+function get_post_of_category_slider($catID){
+	$args=array(
+			'category__in' => $catID,
+			'showposts'=>4,
+			'ignore_sticky_posts'=>1,
+			'orderby'=>rand);
+	$my_query = new WP_Query($args);
+
+	if( $my_query->have_posts() ):
+
+	?>
+				<ul id="<?php echo $catID;?>" >
+				<?php 
+					while ($my_query->have_posts()):$my_query->the_post();?>
+				          <li ><a href="<?php the_permalink() ?>" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a></li>
+	           <?php endwhile; ?>
+               </ul>    
+	<?php 
+		endif; 
+		wp_reset_query(); 
+}
+
+/**
  * Create Post of Category
  * 
  */
-
 function create_postcategory_widget() {
 	register_widget( 'PostCategory_Widget' );
 }
@@ -756,39 +781,6 @@ function get_post_by_cat_theme1($args, $title) {
 	}
 	$postview_query = new WP_Query( $query_args );
 	if ($postview_query->have_posts() ) :
-<<<<<<< HEAD
-	while ( $postview_query->have_posts() ) :
-                $postview_query->the_post(); ?>
- 				<div class="media">
-					<a class="pull-left" href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
-						<?php 
-							if ( has_post_thumbnail() ){
-								$thumb = wp_get_attachment_image_src( get_post_thumbnail_id($postview_query->ID), 'thumbnail_size' );
-								$url = $thumb['0'];
-								$url_resize_img = aq_resize($url,'83px', '63px', true);
-								echo '<img class="media-object" src="'.$url_resize_img.'" alt="">';
-							}else{
-								echo '<img class="media-object" src="http://placehold.it/83x63" alt="">';
-							}
-						 ?>
-					</a>
-					<div class="media-body" >
-						<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>"><?php
-	                		if(!empty($text_lenght) && $text_lenght >0 ){
-	                			echo short_title($text_after,$text_lenght);
-	                		}else{
-	                			$subtitle = get_post_meta(get_the_ID(), 'tkx_sub_title', true);
-	                			if(isset($subtitle) && !empty($subtitle)) {
-	                				echo $subtitle;
-	                			}else {
-	                				the_title();
-	                			}
-	                		}
-	                		?>
-                		</a>
-					</div>
-				</div>
-=======
 	$row = 0;
 	while ( $postview_query->have_posts() ) :
                 $postview_query->the_post(); 
@@ -801,7 +793,7 @@ function get_post_by_cat_theme1($args, $title) {
 								if ( has_post_thumbnail() ){
 									$thumb = wp_get_attachment_image_src( get_post_thumbnail_id($postview_query->ID), 'thumbnail_size' );
 									$url = $thumb['0'];
-									$url_resize_img = aq_resize($url,'600px', '600px', true);
+									$url_resize_img = aq_resize($url,'600px', '600px', false);
 									echo '<img class="img-responsive" src="'.$url_resize_img.'" alt="">';
 								}
 							 ?>                                                
@@ -898,7 +890,6 @@ function get_post_by_cat($args, $title) {
 					</div>
 				</div>
 				<?php $row ++;?>
->>>>>>> cf70080cd61970b1635bbbba3cb265378f7563e1
             <?php endwhile;
             endif;
 }

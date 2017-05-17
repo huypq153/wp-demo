@@ -245,7 +245,8 @@ function getTitle(){
 			echo "</span> ";
 		}
 		if (is_single()) {
-			the_title();
+			//the_title();
+			echo short_title('...',10);
 		}
 			
 	} elseif (is_page()) {
