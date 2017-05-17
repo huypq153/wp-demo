@@ -272,7 +272,9 @@ function getTitle(){
 	elseif (is_search()) {echo"Search Results";}
 }
 
-
+add_filter('get_the_archive_title', function ($title) {
+	return preg_replace('/^\C+: /', '', $title);
+});
 
 /**
  * Custom Functions for this theme.
