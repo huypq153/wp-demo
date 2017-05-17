@@ -268,9 +268,81 @@ h1.site-title{
 .marbot20 {
     margin-bottom: 20px;
 }
+.eye-box-cat{
+	margin-top:0;
+	padding-top:0px;
+	top:0px;
+}
+.portlet-title-image{
+	margin-top:0;
+	padding-top:0px;
+	top:0px;
+}
+.eye-box-cat h2, .eye-box-cat h3, .eye-box-cat h4, .eye-box-cat h5{
+	font-size: 23px;
+	margin-bottom: 0px !important;
+}
+p {
+	font-size: 15px;
+    color: #6d6d6d;
+    line-height: 27px;
+    margin-bottom: 20px;
+}
+.panel-group .panel {
+    border-bottom-color: #ddd;
+}
+.panel-default, .panel-default>.panel-heading, .panel-default>.panel-heading+.panel-collapse>.panel-body {
+    border-color: transparent;
+}
+.panel-group .panel-heading {
+    padding: 0;
+    position: relative;
+    background-color: #ececec;
+}
+.panel-title:hover, .panel-title:not(.collapsed) {
+    text-decoration: none;
+}
+.panel-title {
+	color: #124870;
+    font-size: 16px;
+    line-height: 24px;
+    margin: 0 25px 0 0;
+    display: block;
+    font-weight: 800;
+    padding: 15px !important;
+    text-transform: uppercase;
+}
+.panel-heading a.collapsed::after {
+    font-family: FontAwesome;
+    content: "\f107";
+    color: #646464;
+}
+.panel-heading a::after {
+    content: "\f106";
+    float: right;
+    color: #324c73;
+    position: absolute;
+    right: 15px;
+    margin-top: -14px;
+}
+.panel-heading a::after, .play-button a:before {
+    font-family: FontAwesome;
+    top: 50%;
+}
 .page-footer {
     background: rgb(21, 82, 140);
     color: #fff;
+}
+.offer {
+    font-size: 55px;
+    color: #eef4f9;
+    font-weight: 700;
+    line-height: 60px;
+}
+.center-banner-title {
+    font-size: 24px;
+    font-weight: 400;
+    color: #B6C4D0;
 }
 @media (max-width: 991px){
     .page-header .page-header-menu .hor-menu .navbar-nav > li.open > a, .page-header .page-header-menu .hor-menu .navbar-nav > li.open > a:hover, .page-header .page-header-menu .hor-menu .navbar-nav > li.active > a, .page-header .page-header-menu .hor-menu .navbar-nav > li.active > a:hover, .page-header .page-header-menu .hor-menu .navbar-nav > li.current > a, .page-header .page-header-menu .hor-menu .navbar-nav > li.current > a:hover {

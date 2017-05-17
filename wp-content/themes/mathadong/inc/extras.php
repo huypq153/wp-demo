@@ -715,11 +715,11 @@ function creat_html_box_category($cat_slug, $title=''){
 		$desc = '<p>'.$cat->description.'</p>';
 		$cat_resize_img = aq_resize($cat->img_data['img'],'600px',null, true);
 		$cat_img = '<a class="pull-left" href="/'.$cat->slug.'" title="'.$title.'"><img class="img-responsive" src="'.$cat_resize_img.'" alt="'.$title.'"> </a>';
-		$retVal = '<div class="portlet">
-							<h3>'.$title.'</h3> 
-							<div class="portlet-title-image">						
+		$retVal = '<div class="portlet eye-box-cat ">
+							<div class="portlet-title">
 								'.$cat_img.'	                                                
 							</div>
+							<h3>'.$title.'</h3> 
 							<div class="portlet-body">
 								'.$desc.'
 							</div>
@@ -729,10 +729,20 @@ function creat_html_box_category($cat_slug, $title=''){
 	return '';
 }
 
-function get_post_by_cat($args, $title) {
+/**
+ * get post by cat theme1
+ * @param unknown $args
+ * @param unknown $title
+ */
+function get_post_by_cat_theme1($args, $title) {
 	global $postdate; 
+	$text_lenght = 0;
+	$text_after = '';
 	$postnum = $args['postnum'];
 	$category = $args['category'];
+	if(array_key_exists('text_lenght',$args) && $args['text_lenght']){
+		$text_lenght = $args['text_lenght'];
+	}
 	$query_args = array(
 			'posts_per_page' => $postnum,
 			'orderby' => 'date',
@@ -745,40 +755,118 @@ function get_post_by_cat($args, $title) {
 		$query_args['category_name'] = $category;
 	}
 	$postview_query = new WP_Query( $query_args );
-// 	if ($postview_query->have_posts() ) :
-// 	while ( $postview_query->have_posts() ) :
-//                 $postview_query->the_post(); ?>
-<!--  				<div class="media"> -->
-					<a class="pull-left" href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
-						<?php 
-// 							if ( has_post_thumbnail() ){
-// 								$thumb = wp_get_attachment_image_src( get_post_thumbnail_id($postview_query->ID), 'thumbnail_size' );
-// 								$url = $thumb['0'];
-// 								$url_resize_img = aq_resize($url,'83px', '63px', true);
-// 								echo '<img class="media-object" src="'.$url_resize_img.'" alt="">';
-// 							}else{
-// 								echo '<img class="media-object" src="http://placehold.it/83x63" alt="">';
-// 							}
-// 						 ?>
-<!-- 					</a> -->
-<!-- 					<div class="media-body" > -->
-						<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>"><?php
-// 	                		if(!empty($text_lenght) && $text_lenght >0 ){
-// 	                			echo short_title($text_after,$text_lenght);
-// 	                		}else{
-// 	                			$subtitle = get_post_meta(get_the_ID(), 'tkx_sub_title', true);
-// 	                			if(isset($subtitle) && !empty($subtitle)) {
-// 	                				echo $subtitle;
-// 	                			}else {
-// 	                				the_title();
-// 	                			}
-// 	                		}
-// 	                		?>
-<!--                 		</a> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
+	if ($postview_query->have_posts() ) :
+	$row = 0;
+	while ( $postview_query->have_posts() ) :
+                $postview_query->the_post(); 
+				$post = get_post($postview_query->ID);
+	?>
+			<div class="col-md-6 ">
+				<div class="portlet eye-box-cat ">
+						<div class="portlet-title">
+							<?php 
+								if ( has_post_thumbnail() ){
+									$thumb = wp_get_attachment_image_src( get_post_thumbnail_id($postview_query->ID), 'thumbnail_size' );
+									$url = $thumb['0'];
+									$url_resize_img = aq_resize($url,'600px', '600px', true);
+									echo '<img class="img-responsive" src="'.$url_resize_img.'" alt="">';
+								}
+							 ?>                                                
+						</div>
+						<h3>
+							<?php
+								if(!empty($text_lenght) && $text_lenght > 0 ){
+		                			echo short_title($text_after,$text_lenght);
+		                		}else{
+		                			the_title();
+		                		} ?> 
+						</h3> 
+						<div class="portlet-body">
+							<?php echo  $post->post_excerpt;?>
+						</div>
+				</div>
+			</div>
+                
+				<?php $row ++;?>
             <?php endwhile;
-//             endif;
+            endif;
+}
+
+/**
+ * get post by cat theme2
+ * @param unknown $args
+ * @param unknown $title
+ */
+function get_post_by_cat($args, $title) {
+	global $postdate;
+	$text_lenght = 0;
+	$text_after = '';
+	$postnum = $args['postnum'];
+	$category = $args['category'];
+	if(array_key_exists('text_lenght',$args) && $args['text_lenght']){
+		$text_lenght = $args['text_lenght'];
+	}
+	$query_args = array(
+			'posts_per_page' => $postnum,
+			'orderby' => 'date',
+			'order' => 'DESC'
+	);
+	$post_type_arr = array('gioithieu','quytrinh','tailieu','dichvu');
+	if(in_array($category, $post_type_arr)){
+		$query_args['post_type'] = $category;
+	}else{
+		$query_args['category_name'] = $category;
+	}
+	$postview_query = new WP_Query( $query_args );
+	if ($postview_query->have_posts() ) :
+	$row = 0;
+	while ( $postview_query->have_posts() ) :
+	$postview_query->the_post();
+	$post = get_post($postview_query->ID);
+	?>
+                <div class="panel-group accordion" id="accordion1">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<a class="panel-title accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion1" href="#collapse_<?php echo $post->ID; ?>">
+							<?php
+								if(!empty($text_lenght) && $text_lenght > 0 ){
+		                			echo short_title($text_after,$text_lenght);
+		                		}else{
+		                			the_title();
+		                		} ?> 
+							
+							</a>
+						</div>
+						<div id="collapse_<?php echo $post->ID; ?>" class="panel-collapse collapse">
+							<div class="panel-body">
+								<div class="media">
+										<a class="pull-left" href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
+											<?php 
+												if ( has_post_thumbnail() ){
+													$thumb = wp_get_attachment_image_src( get_post_thumbnail_id($postview_query->ID), 'thumbnail_size' );
+													$url = $thumb['0'];
+													$url_resize_img = aq_resize($url,'83px', '63px', true);
+													echo '<img class="media-object" src="'.$url_resize_img.'" alt="">';
+												}else{
+													echo '<img class="media-object" src="http://placehold.it/83x63" alt="">';
+												}
+											 ?>
+										</a>
+										<div class="media-body" >
+											<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
+												<?php
+						                				the_title();
+						                		?>
+					                		</a>
+										</div>
+									</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<?php $row ++;?>
+            <?php endwhile;
+            endif;
 }
 
 /**
@@ -795,6 +883,20 @@ function get_cat_by_slug($cat_slug){
 	return $cat;
 }
 
+/**
+ * get_post_by_name
+ * @param unknown $slug
+ * @param unknown $post_type
+ */
+function get_post_by_name($slug, $post_type){
+	$args = [
+			'post_type'      => $post_type,
+			'posts_per_page' => 1,
+			'post_name__in'  => [$slug]
+	];
+	$query = get_posts( $args );
+	return $query;
+}
 
 /**
  * Get objects by post type
