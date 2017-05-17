@@ -745,40 +745,40 @@ function get_post_by_cat($args, $title) {
 		$query_args['category_name'] = $category;
 	}
 	$postview_query = new WP_Query( $query_args );
-// 	if ($postview_query->have_posts() ) :
-// 	while ( $postview_query->have_posts() ) :
-//                 $postview_query->the_post(); ?>
-<!--  				<div class="media"> -->
+	if ($postview_query->have_posts() ) :
+	while ( $postview_query->have_posts() ) :
+                $postview_query->the_post(); ?>
+ 				<div class="media">
 					<a class="pull-left" href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
 						<?php 
-// 							if ( has_post_thumbnail() ){
-// 								$thumb = wp_get_attachment_image_src( get_post_thumbnail_id($postview_query->ID), 'thumbnail_size' );
-// 								$url = $thumb['0'];
-// 								$url_resize_img = aq_resize($url,'83px', '63px', true);
-// 								echo '<img class="media-object" src="'.$url_resize_img.'" alt="">';
-// 							}else{
-// 								echo '<img class="media-object" src="http://placehold.it/83x63" alt="">';
-// 							}
-// 						 ?>
-<!-- 					</a> -->
-<!-- 					<div class="media-body" > -->
+							if ( has_post_thumbnail() ){
+								$thumb = wp_get_attachment_image_src( get_post_thumbnail_id($postview_query->ID), 'thumbnail_size' );
+								$url = $thumb['0'];
+								$url_resize_img = aq_resize($url,'83px', '63px', true);
+								echo '<img class="media-object" src="'.$url_resize_img.'" alt="">';
+							}else{
+								echo '<img class="media-object" src="http://placehold.it/83x63" alt="">';
+							}
+						 ?>
+					</a>
+					<div class="media-body" >
 						<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>"><?php
-// 	                		if(!empty($text_lenght) && $text_lenght >0 ){
-// 	                			echo short_title($text_after,$text_lenght);
-// 	                		}else{
-// 	                			$subtitle = get_post_meta(get_the_ID(), 'tkx_sub_title', true);
-// 	                			if(isset($subtitle) && !empty($subtitle)) {
-// 	                				echo $subtitle;
-// 	                			}else {
-// 	                				the_title();
-// 	                			}
-// 	                		}
-// 	                		?>
-<!--                 		</a> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
+	                		if(!empty($text_lenght) && $text_lenght >0 ){
+	                			echo short_title($text_after,$text_lenght);
+	                		}else{
+	                			$subtitle = get_post_meta(get_the_ID(), 'tkx_sub_title', true);
+	                			if(isset($subtitle) && !empty($subtitle)) {
+	                				echo $subtitle;
+	                			}else {
+	                				the_title();
+	                			}
+	                		}
+	                		?>
+                		</a>
+					</div>
+				</div>
             <?php endwhile;
-//             endif;
+            endif;
 }
 
 /**
