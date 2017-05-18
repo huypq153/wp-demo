@@ -56,30 +56,30 @@ function pqheyedoctor_widgets_init() {
 			'before_title'  => '<h3 class="widget-title">',
 			'after_title'   => '</h3>',
 	) );
+// 	register_sidebar( array(
+// 			'name'          => __( 'Footer Left', 'pqheyedoctor' ),
+// 			'id'            => 'sidebar-2',
+// 			'before_widget' => '<aside id="%1$s" class="widget %2$s">',
+// 			'after_widget'  => '</aside>',
+// 			'before_title'  => '<h3 class="widget-title">',
+// 			'after_title'   => '</h3>',
+// 	) );
 	register_sidebar( array(
-			'name'          => __( 'Footer Left', 'pqheyedoctor' ),
-			'id'            => 'sidebar-2',
-			'before_widget' => '<aside id="%1$s" class="widget %2$s">',
-			'after_widget'  => '</aside>',
-			'before_title'  => '<h3 class="widget-title">',
-			'after_title'   => '</h3>',
+			'name'          => __( 'Footer Menu', 'pqheyedoctor' ),
+			'id'            => 'footer-menu',
+			'before_widget' => '',
+			'after_widget'  => '',
+			'before_title'  => '',
+			'after_title'   => '',
 	) );
-	register_sidebar( array(
-			'name'          => __( 'Footer Center', 'pqheyedoctor' ),
-			'id'            => 'sidebar-3',
-			'before_widget' => '<aside id="%1$s" class="widget %2$s">',
-			'after_widget'  => '</aside>',
-			'before_title'  => '<h3 class="widget-title">',
-			'after_title'   => '</h3>',
-	) );
-	register_sidebar( array(
-			'name'          => __( 'Footer Right', 'pqheyedoctor' ),
-			'id'            => 'sidebar-4',
-			'before_widget' => '<aside id="%1$s" class="widget %2$s">',
-			'after_widget'  => '</aside>',
-			'before_title'  => '<h3 class="widget-title">',
-			'after_title'   => '</h3>',
-	) );
+// 	register_sidebar( array(
+// 			'name'          => __( 'Footer Right', 'pqheyedoctor' ),
+// 			'id'            => 'sidebar-4',
+// 			'before_widget' => '<aside id="%1$s" class="widget %2$s">',
+// 			'after_widget'  => '</aside>',
+// 			'before_title'  => '<h3 class="widget-title">',
+// 			'after_title'   => '</h3>',
+// 	) );
 }
 add_action( 'widgets_init', 'pqheyedoctor_widgets_init' );
 

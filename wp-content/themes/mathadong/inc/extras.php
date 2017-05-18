@@ -601,15 +601,18 @@ class PostCategory_Widget extends WP_Widget {
 		$default = array(
 				'title' => 'Bài viết theo chuyên mục',
 				'postnum' => 5,
+				'bg_widget' => '',
 				'category' => 'slug',
 		);
 		$instance = wp_parse_args( (array) $instance, $default );
 		$title = esc_attr( $instance['title'] );
 		$postnum = esc_attr( $instance['postnum'] );
+		$bg_widget = esc_attr( $instance['bg_widget'] );
 		$category = esc_attr( $instance['category'] );
 
 		echo "<label>Tiêu đề:</label> <input class='widefat' type='text' name='".$this->get_field_name('title')."' value='".$title."' />";
 		echo "<label>Số lượng bài viết:</label> <input class='widefat' type='number' name='".$this->get_field_name('postnum')."' value='".$postnum."' />";
+		echo "<label>Mầu widget:</label> <input class='widefat' type='text' name='".$this->get_field_name('bg_widget')."' value='".$bg_widget."' placeholder='blue|grey|yellow|red|green|blue-hoki|purple'  />";
 		echo '<p>Nhập vào slug chuyên mục <input type="text" class="widefat" name="'.$this->get_field_name('category').'" value="'.$category.'" placeholder="'.$category.'"  /></p>';
 	}
 
@@ -620,6 +623,7 @@ class PostCategory_Widget extends WP_Widget {
 		$instance = $old_instance;
 		$instance['title'] = strip_tags($new_instance['title']);
 		$instance['postnum'] = strip_tags($new_instance['postnum']);
+		$instance['bg_widget'] = strip_tags($new_instance['bg_widget']);
 		$instance['category'] = strip_tags($new_instance['category']);
 		return $instance;
 	}
@@ -630,6 +634,7 @@ class PostCategory_Widget extends WP_Widget {
 		$title = apply_filters( 'widget_title', $instance['title'] );
 		$postnum = $instance['postnum'];
 		$category = $instance['category'];
+		$bg_widget =  (!empty($instance['bg_widget'])) ? $instance['bg_widget'] : '';
 		$query_args = array(
 				'posts_per_page' => $postnum,
 				//'category_name' => $category,
@@ -645,15 +650,22 @@ class PostCategory_Widget extends WP_Widget {
 			$query_args['category_name'] = $category;
 		}
 		echo $before_widget;
-		echo $before_title.$title.$after_title;
-
+		echo '<div class="portlet box '.$bg_widget.' ">';
+		echo '	<div class="portlet-title">';
+		echo '		<div class="caption">';
+		echo $title;
+		echo '		</div>';
+		echo '		<div class="tools">';
+		echo '			<a href="javascript:;" class="collapse" data-original-title="" title="">';
+		echo '			</a>';
+		echo '		</div>';
+		echo '	</div>';
 		$postview_query = new WP_Query( $query_args );
-
 		if ($postview_query->have_posts() ) :
-		//echo "<ul>";
-
 		while ( $postview_query->have_posts() ) :
-                $postview_query->the_post(); ?>
+                $postview_query->the_post(); 
+				echo '<div class="portlet-body">';
+		?>
  				<div class="media">
 					<a class="pull-left" href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
 						<?php 
@@ -683,9 +695,10 @@ class PostCategory_Widget extends WP_Widget {
                 		</a>
 					</div>
 				</div>
+			<?php echo '</div>';?>
             <?php endwhile;
-            //echo "</ul>";
             endif;
+            echo '</div>';
             echo $after_widget;
     }
 }
@@ -793,7 +806,7 @@ function get_post_by_cat_theme1($args, $title) {
 								if ( has_post_thumbnail() ){
 									$thumb = wp_get_attachment_image_src( get_post_thumbnail_id($postview_query->ID), 'thumbnail_size' );
 									$url = $thumb['0'];
-									$url_resize_img = aq_resize($url,'600px', '600px', false);
+									$url_resize_img = aq_resize($url,'600px', '278px', true);
 									echo '<img class="img-responsive" src="'.$url_resize_img.'" alt="">';
 								}
 							 ?>                                                
@@ -848,6 +861,10 @@ function get_post_by_cat($args, $title) {
 	while ( $postview_query->have_posts() ) :
 	$postview_query->the_post();
 	$post = get_post($postview_query->ID);
+	$inshow = 'collapse';
+	if($row ==0){
+		$inshow = 'in';
+	}
 	?>
                 <div class="panel-group accordion" id="accordion1">
 					<div class="panel panel-default">
@@ -862,7 +879,8 @@ function get_post_by_cat($args, $title) {
 							
 							</a>
 						</div>
-						<div id="collapse_<?php echo $post->ID; ?>" class="panel-collapse collapse">
+						
+						<div id="collapse_<?php echo $post->ID; ?>" class="panel-collapse <?php echo $inshow; ?>">
 							<div class="panel-body">
 								<div class="media">
 										<a class="pull-left" href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">

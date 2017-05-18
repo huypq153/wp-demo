@@ -54,14 +54,43 @@
 	            	<div class="offer">
                           <?php  echo $postdv[0]->post_excerpt; ?>
                     </div>
-	            </div>
-	            <!-- Left Section -->
 	            
-	            <!-- Right Section -->
-	            <div class="col-md-4">                
-	            
-	            </div>
-	            <!-- Right Section -->
+	            <div class="row">
+                        <div class="col-md-4 media marbot10">
+                            <div class="media-left">
+                                <i class="fa flaticon-medical-21 circle-icon"></i>
+                            </div>
+                            <div class="media-body">
+                                <h4 class="marbot10">Patient Care</h4>
+                                <p class="fontresize">
+                                    Both of our surgeons and most of our staff have had LASIK.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 media marbot10">
+                            <div class="media-left">
+                                <i class="fa flaticon-hospital circle-icon"></i>
+                            </div>
+                            <div class="media-body">
+                                <h4 class="marbot10">Local Care</h4>
+                                <p class="fontresize">
+                                    We work with over 400 optometrists across the Northwest.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 media marbot10">
+                            <div class="media-left">
+                                <i class="fa flaticon-medical-8 circle-icon"></i>
+                            </div>
+                            <div class="media-body">
+                                <h4 class="marbot10">Experience</h4>
+                                <p class="fontresize">
+                                    Our surgeons have performed over 100,000 LASIK.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+	           </div>
 	        </div>
 	    </div>
 	</div>

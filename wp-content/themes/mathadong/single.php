@@ -25,7 +25,7 @@ get_header(); ?>
 						endwhile;
 						?>
 				</div>
-				<div class="col-md-3 blog-sidebar">
+				<div class="col-md-3 blog-sidebar ">
 					<?php get_sidebar('content-left'); ?>
 				</div>
 				
@@ -34,6 +34,6 @@ get_header(); ?>
 			<div class="row">
 				<?php get_sidebar(); ?>
 			</div>
-</div>
+	</div>
 </div>
 <?php get_footer(); ?>
