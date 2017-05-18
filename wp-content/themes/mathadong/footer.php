@@ -22,13 +22,13 @@
                     <div class="text-center marbot0 media">
                         <span class="media-left"><i class="fa fa-phone icon-bordered"></i></span>
                         <span class="media-body text-left media-middle">
-                            Bạn cần trợ giúp xin gọi cho chúng tôi <a href="#"><span class="bold">(84) 0433 825 059</span></a>                
+                            Bạn cần trợ giúp xin gọi cho chúng tôi <a href="tel:0433825059"><span class="bold">(84) 0433 825 059</span></a>                
                         </span>
                     </div> 
                 </div>
                 
                 <div class="col-md-4 vertical-middle visible-block-sm-xs text-center animatedParent animateOnce">
-                    <a href="#" class="btn btn-type1-reverse pulse animated go">Gọi Cấp Cứu</a>
+                    <a href="tel:0433825059" class="btn btn-type1-reverse pulse animated go">Gọi Cấp Cứu</a>
                 </div>
             </div>
         </div>

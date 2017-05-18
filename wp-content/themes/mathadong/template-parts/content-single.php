@@ -3,8 +3,8 @@
  * @package pqheyedoctor
  */
 ?>
-<div class="portlet pqh-light">
-	<div class="portlet-body">
+<div class="portlet pqh-light none-radius">
+	<div class="portlet-body none-radius">
 		<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 			
 			<?php

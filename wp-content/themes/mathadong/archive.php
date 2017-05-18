@@ -27,8 +27,8 @@ get_header();
 						<?php
 						if(is_tag()):
 							?>
-								<div class="portlet white-bg">
-								<div class="portlet-body">
+								<div class="portlet white-bg none-radius">
+								<div class="portlet-body none-radius">
 									<div class="large_title_img">
 					                	<h1><?php the_archive_title();?></h1>
 					                	<?php the_archive_description('<h2 class="blockquote_1">','</h2>');?>
@@ -83,8 +83,8 @@ get_header();
 									?>
 									
 										<div class="col-md-6">
-											<div class="portlet white-bg">
-												<div class="portlet-body">
+											<div class="portlet white-bg none-radius">
+												<div class="portlet-body none-radius">
 													<div class="sbi_panel" data-bg="<?php echo $cat_resize_img; ?>">
 														<h3><a href="<?php echo get_category_link( $category->term_id )?>" class="sbi_label"><?php echo $category->name;?></a></h3>
 														<div class="sbi_content">
@@ -103,8 +103,8 @@ get_header();
 								  else:
 										?>
 										
-										<div class="portlet white-bg">
-										<div class="portlet-body">
+										<div class="portlet white-bg none-radius">
+										<div class="portlet-body none-radius">
 											<div class="large_title_img">
 							                	<h1><?php the_archive_title();?></h1>
 							                	<?php the_archive_description('<h2 class="blockquote_1">','</h2>');?>

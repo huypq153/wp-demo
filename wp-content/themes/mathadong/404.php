@@ -9,8 +9,8 @@ get_header(); ?>
 	<div class="container " style="margin-top: 30px;">
 		<div class="row">
 			<div class="col-md-12 ">	
-				<div class="portlet white-bg">
-					<div class="portlet-body">
+				<div class="portlet white-bg none-radius">
+					<div class="portlet-body none-radius">
 						<h1 class="page-title"><?php _e( 'Oops! That page can&rsquo;t be found.', 'twentysixteen' ); ?></h1>
 						<p><?php _e( 'It looks like nothing was found at this location. Maybe try a search?', 'twentysixteen' ); ?></p>
 					</div>

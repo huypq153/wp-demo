@@ -26,8 +26,8 @@ get_header();
 			foreach ( $myposts as $post ):?>
 			<div id="post-<?php the_ID(); ?>" class="col-md-6">
 				<!-- BEGIN Portlet PORTLET-->
-				<div class="portlet white-bg">
-					<div class="portlet-title-image">
+				<div class="portlet white-bg none-radius">
+					<div class="portlet-title-image none-radius">
 						<a class="pull-left" href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
 						<?php if(has_post_thumbnail()){?>
                         <?php 
