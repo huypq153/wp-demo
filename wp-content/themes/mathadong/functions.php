@@ -277,6 +277,26 @@ add_filter('get_the_archive_title', function ($title) {
 	return preg_replace('/^\C+: /', '', $title);
 });
 
+// function my_myme_types($mime_types){
+// 	//Creating a new array will reset the allowed filetypes
+// 	$mime_types = array(
+// 			'jpg|jpeg|jpe' => 'image/jpeg',
+// 			'gif' => 'image/gif',
+// 			'png' => 'image/png',
+// 			'bmp' => 'image/bmp',
+// 			'tif|tiff' => 'image/tiff'
+// 	);
+// 	return $mime_types;
+// }
+// add_filter('upload_mimes', 'my_myme_types', 1, 1);
+
+add_filter('upload_mimes','add_custom_mime_types');
+function add_custom_mime_types($mimes){
+	return array_merge($mimes,array (
+			'bmp' => 'image/bmp'
+	));
+}
+
 /**
  * Custom Functions for this theme.
  */

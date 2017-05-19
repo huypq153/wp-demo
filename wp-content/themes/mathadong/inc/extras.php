@@ -821,6 +821,7 @@ function get_related_post_by_cat($args, $title) {
                      		<?php 
 	                        	$thumb = wp_get_attachment_image_src( get_post_thumbnail_id($my_query->ID), 'thumbnail_size' );
 	                        	$url = $thumb['0'];
+	                        	//echo $url;
 	                        	$url_resize_img = aq_resize($url,'82px', '62px', true);
 	                        ?>
 	                        <img class="media-object-home "  src="<?php echo $url_resize_img; ?>" alt="">

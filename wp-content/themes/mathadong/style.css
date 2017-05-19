@@ -10,7 +10,6 @@ h1, h2, h3, h4, h5 {
 	    color: #082C46 !important;
 	    text-transform: uppercase;
 	    font-size: 22px !important;
-	    line-height: 30px !important;
 	    font-family: "Open Sans", sans-serif!important;
 	    font-weight: 800 !important;
 	}
@@ -224,7 +223,7 @@ h1.site-title{
     text-shadow: rgba(0,0,0,.498039) 0 1px 2px;
     transition: all 0s ease 0s;
     line-height: 60px;
-    font-size: 38px;
+    font-size: 30px;
     color: #eef4f9;
     font-weight: 800;
     /*font-family: Raleway,sans-serif;*/
