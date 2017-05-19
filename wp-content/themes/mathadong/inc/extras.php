@@ -746,25 +746,94 @@ function get_news_of_category_by_slug( $post_number, $cat_slug ) {
  * creat_html_box_category
  * @param unknown $cat_slug
  */
-function creat_html_box_category($cat_slug, $title=''){
+function creat_html_box_category($cat_slug, $title='', $skin='', $radius=false){
 	$cat = get_cat_by_slug($cat_slug);
 	if($cat->cat_ID >0){
 		if(empty($title)) $title= $cat->name;
+		
+		$cssRadius = ' none-radius ';
+		if($radius)
+			$cssRadius = ' ';
 		$desc = '<p>'.$cat->description.'</p>';
 		$cat_resize_img = aq_resize($cat->img_data['img'],'600px',null, true);
 		$cat_img = '<a class="pull-left" href="/'.$cat->slug.'" title="'.$title.'"><img class="img-responsive" src="'.$cat_resize_img.'" alt="'.$title.'"> </a>';
-		$retVal = '<div class="portlet eye-box-cat ">
+		$retVal = '<div class="portlet '.$skin . $cssRadius .'">
 							<div class="portlet-title">
 								'.$cat_img.'	                                                
 							</div>
-							<h3>'.$title.'</h3> 
-							<div class="portlet-body">
+							<div class="portlet-body '. $cssRadius .'">
+								<h3 class="ptitle">'.$title.'</h3> 
 								'.$desc.'
 							</div>
 					</div>';
 		return $retVal;
 	}
 	return '';
+}
+
+/**
+ * get_box_category_home
+ * @param unknown $cat_slug
+ */
+function get_box_category_home($cat_slug, $title='', $img_size='600px'){
+	$cat = get_cat_by_slug($cat_slug);
+	if($cat->cat_ID >0){
+		if(empty($title)) $title= $cat->name;
+		$desc = '<p>'.$cat->description.'</p>';
+		$cat_resize_img = aq_resize($cat->img_data['img'],$img_size,null, true);
+		$cat_img = '<a class="pull-left" href="/'.$cat->slug.'" title="'.$title.'"><img class="img-responsive" src="'.$cat_resize_img.'" alt="'.$title.'"> </a>';
+		$retVal = array('img'=> $cat_img, 'title' =>$title, 'desc'=> $desc);
+		return $retVal;
+	}
+	return '';
+}
+
+function get_related_post_by_cat($args, $title) {
+	global $postdate;
+	$text_lenght = 0;
+	$text_after = '';
+	$postnum = $args['postnum'];
+	$category = $args['category'];
+	if(array_key_exists('text_lenght',$args) && $args['text_lenght']){
+		$text_lenght = $args['text_lenght'];
+	}
+	$query_args = array(
+			'posts_per_page' => $postnum,
+			'orderby' => 'date',
+			'order' => 'DESC'
+	);
+	$post_type_arr = array('gioithieu','quytrinh','tailieu','dichvu');
+	if(in_array($category, $post_type_arr)){
+		$query_args['post_type'] = $category;
+	}else{
+		$query_args['category_name'] = $category;
+	}
+	$postview_query = new WP_Query( $query_args );
+	if ($postview_query->have_posts() ) :
+	$row = 0;
+	while ( $postview_query->have_posts() ) :
+			$postview_query->the_post();
+			$post = get_post($postview_query->ID);
+	?>
+			<div class="media">
+                     <a class="pull-left" href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
+                     	<?php if(has_post_thumbnail()){?>
+                     		<?php 
+	                        	$thumb = wp_get_attachment_image_src( get_post_thumbnail_id($my_query->ID), 'thumbnail_size' );
+	                        	$url = $thumb['0'];
+	                        	$url_resize_img = aq_resize($url,'82px', '62px', true);
+	                        ?>
+	                        <img class="media-object-home "  src="<?php echo $url_resize_img; ?>" alt="">
+                        <?php }else{?>
+                        	<img class="media-object-home" src="http://placehold.it/82x62" alt="">
+                        <?php }?>
+                    </a>
+                    <div class="media-body">
+                        <a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>"><?php the_title(); ?></a>
+                    </div>
+                </div>
+      <?php endwhile;
+      endif;
 }
 
 /**

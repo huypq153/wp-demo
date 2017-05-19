@@ -41,7 +41,7 @@ get_header();
                         <?php }?>
                          </a>
 					</div>
-					<div class="portlet-body ">
+					<div class="portlet-body none-radius">
 						<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>"><h2 class="arc_title"><?php the_title(); ?></h2></a>
 						<div class="color-light marbot20"><em><?php twentysixteen_entry_date();?></em></div>
                         <?php twentysixteen_excerpt(); ?>
