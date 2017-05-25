@@ -12,6 +12,9 @@ git remote add origin https://github.com/huypq153/wp-demo.git
 git push -u origin master
 
 
+
 git init Project
 git remote add origin [some-url]
 git pull origin master
+
+git remote add origin https://github.com/Longanvsnr/assist.git

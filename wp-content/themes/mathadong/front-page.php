@@ -12,19 +12,8 @@
  */
 
 get_header(); ?>
-<!-- BEGIN PAGE HEAD -->
-	<div class="page-head pqh-bg1">
-		<div class="container">
-			<!-- BEGIN PAGE TITLE -->
-			<div class="page-title">
-				&nbsp;
-			</div>
-		</div>
-	</div>
-<!-- END PAGE HEAD -->
-	
 <!-- BEGIN PAGE CONTENT -->
-<div class="page-content">
+<div class="page-content ">
 		<?php if ( have_posts() ) : ?>
 
 			<?php /* Start the Loop */ $ink_count = 0; $ink_row_count=0 ?>

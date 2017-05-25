@@ -60,7 +60,9 @@
                         </ul>
                     </div>
                     <div class="copyright marbot30-md-xs">
-                        <?php echo esc_html(get_theme_mod('pqheyedoctor_footer_text')); ?>                   
+                        <?php echo esc_html(get_theme_mod('pqheyedoctor_footer_text')); ?>
+                        <p style="margin-bottom: 0px; padding-bottom: 0px;">Địa chỉ: 2D Nguyễn Viết Xuân, P. Quang Trung, Q. Hà Đông, Tp Hà Nội</p>
+                        <p>Email: bvmhd@hanoi.gov.vn</p>                   
                     </div>
                 </div>
 		         
@@ -78,7 +80,7 @@ jQuery(document).ready(function() {
 	    classToAdd: 'visible animated fadeIn', // Class to add to the elements when they are visible
 	    offset: 800    
 	 });  
-	 console.log("aaaaa"); 
+	 //console.log("aaaaa"); 
 });            
 </script>
 </body>

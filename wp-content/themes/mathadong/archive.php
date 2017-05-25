@@ -6,7 +6,7 @@ get_header();
 <div class="page-content" >
 	<div class="container" >
 		<div class="row">
-			<div class="col-md-12 ">	
+			<div class="col-md-9 blog-page">
                 <?php if ( have_posts() ) : ?>
 						<?php
 						    if ( is_single() ) {
@@ -28,12 +28,13 @@ get_header();
 						if(is_tag()):
 							?>
 								<div class="portlet white-bg none-radius">
-								<div class="portlet-body none-radius">
-									<div class="large_title_img">
-					                	<h1><?php the_archive_title();?></h1>
-					                	<?php the_archive_description('<h2 class="blockquote_1">','</h2>');?>
+									<div class="portlet-body none-radius">
+										<div class="large_title_img">
+						                	<h1><?php the_archive_title();?></h1>
+						                	<?php the_archive_description('<h2 class="blockquote_1">','</h2>');?>
+										</div>
 									</div>
-									<div class="keyword_filter">&nbsp;</div>
+								</div>
 								<?php 
 								// Start the Loop.
 								while ( have_posts() ) : the_post();
@@ -51,20 +52,14 @@ get_header();
 								endwhile;
 					
 								// Previous/next page navigation.
-								the_posts_pagination( array(
-									'prev_text'          => __( 'Previous page', 'twentysixteen' ),
-									'next_text'          => __( 'Next page', 'twentysixteen' ),
-									'before_page_number' => '<span class="meta-nav screen-reader-text">' . __( 'Page', 'twentysixteen' ) . ' </span>',
-								) );
+								pqheyedoctor_pagination();
 								?>
-								</div>
-								</div>
+								
 							<?php 
 						else:
 							
 								if($parentCatID >0):
 								?>
-									<div class="row">
 								<?php 
 									$args = array('child_of' => $parentCatID);
 									$categories = get_categories( $args );
@@ -98,22 +93,26 @@ get_header();
 									<?php
 										endforeach; 
 									?>
-								</div>
 									<?php 
 								  else:
 										?>
-										
 										<div class="portlet white-bg none-radius">
-										<div class="portlet-body none-radius">
-											<div class="large_title_img">
-							                	<h1><?php the_archive_title();?></h1>
-							                	<?php the_archive_description('<h2 class="blockquote_1">','</h2>');?>
+											<div class="portlet-body none-radius">
+												<div class="large_title_img">
+								                	<h1><?php the_archive_title();?></h1>
+								                	<?php the_archive_description('<h2 class="blockquote_1">','</h2>');?>
+												</div>
 											</div>
-										<div class="keyword_filter">&nbsp;</div>
+										</div>
 										<?php 
 										// Start the Loop.
+										$row = 0;
+										//global $wp_query;
 										while ( have_posts() ) : the_post();
-											
+											if($row  == 0 ){
+												echo '<div class="row">';
+											}
+											$row ++;
 											/*
 											 * Include the Post-Format-specific template for the content.
 											 * If you want to override this in a child theme, then include a file
@@ -121,20 +120,25 @@ get_header();
 											 * 
 											 */
 											get_template_part( 'template-parts/content', 'archive' );
-										// End the loop.
+											// End the loop.
+											
+											if($row == 2 ){
+												$row = 0;
+												echo '</div>';
+											}
+											
 										endwhile;
-							
-										// Previous/next page navigation.
-										the_posts_pagination( array(
-											'type' =>'list',	
-											'screen_reader_text' => __( '&nbsp;', 'twentysixteen' ),	
-											'prev_text'          => __( 'Prev', 'twentysixteen' ),
-											'next_text'          => __( 'Next', 'twentysixteen' ),
-											'before_page_number' => '<span class="meta-nav screen-reader-text">' . __( '', 'twentysixteen' ) . ' </span>',
-										) );
+										if($row > 0) {
+											echo '</div>';
+										}
+										
 										?>
-										</div>
-										</div>
+									
+										<?php 
+										// Previous/next page navigation.
+										pqheyedoctor_pagination();
+										?>
+										
 									<?php 
 									endif;
 								endif;
@@ -143,10 +147,7 @@ get_header();
 						endif;
 							?>
 					<?php 
-					//echo '<div class="row">';
-					// Previous/next page navigation.
-					pqheyedoctor_pagination();
-					//echo '</div>';
+					
 					?>
 				
 					<?php 
@@ -155,6 +156,9 @@ get_header();
 					get_template_part( 'content', 'none' );
 				endif;
 				?>
+			</div>
+			<div class="col-md-3 blog-sidebar ">
+				<?php get_sidebar('content-left'); ?>
 			</div>
 		</div>
 	</div>

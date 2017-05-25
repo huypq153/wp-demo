@@ -28,11 +28,10 @@
 			</header><!-- .entry-header -->
 			<div class="entry-content">
 				<?php the_content(); ?>
+				<?php get_related_post();?>
 				<?php
-					wp_link_pages( array(
-						'before' => '<div class="page-links">' . __( 'Pages:', 'pqheyedoctor' ),
-						'after'  => '</div>',
-					) );
+					pqheyedoctor_pagination();
+				
 				?>
 			</div><!-- .entry-content -->
 		</article><!-- #post-## -->

@@ -56,4 +56,42 @@ jQuery(document).ready(function() {
 	       pauseTime: 9000 // How long each slide will show	
 	   });
 	});
+	
+	$('#myCarousel').carousel({
+		  interval: 3000
+	});
+	
+	$('#myCarousel_Gallery').carousel({
+		  interval: 3000
+	});
+	
+	$('#myCarousel.carousel .item').each(function(){
+	  var next = $(this).next();
+	  if (!next.length) {
+	    next = $(this).siblings(':first');
+	  }
+	  next.children(':first-child').clone().appendTo($(this));
+
+	  if (next.next().length>0) {
+	 
+	      next.next().children(':first-child').clone().appendTo($(this)).addClass('rightest');
+	      
+	  }
+	  else {
+	      $(this).siblings(':first').children(':first-child').clone().appendTo($(this));
+	     
+	  }
+	});
+	
+	var Portfolio = function () {
+	    return {
+	        //main function to initiate the module
+	        init: function () {
+	            $('.mix-grid').mixitup();
+	        }
+
+	    };
+
+	}();
+	Portfolio.init(); 
 });

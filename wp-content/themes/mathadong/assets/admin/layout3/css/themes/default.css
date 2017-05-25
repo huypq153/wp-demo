@@ -304,6 +304,7 @@ Page Header
 .page-header .page-header-menu .hor-menu.hor-menu-light .navbar-nav > li.open > a {
   color: #333 !important;
   background: #fafafc !important;
+  border-bottom: 2px solid #1967b2;
 }
 .page-header .page-header-menu .hor-menu.hor-menu-light .navbar-nav > li.open > a > i {
   color: #333 !important;
@@ -352,7 +353,7 @@ Page Header
 }
 .page-header .page-header-menu .hor-menu.hor-menu-light .navbar-nav > li > .dropdown-menu {
   border: 1px solid #eaeaf2;
-  border-top: 0;
+  /*border-top: 0;*/
 }
 .page-header .page-header-menu .search-form {
   background: #38414c;

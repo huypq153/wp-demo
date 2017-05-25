@@ -383,7 +383,8 @@ function get_related_post() {
 			'post_status'=>'publish',
 			'posts_per_page'=>-1,
 			'caller_get_posts'=>1,
-			'order'=>'asc'
+			'orderby' => 'date',
+			'order'=>'desc'
 	);
 	$my_query = new WP_Query($args);
 	if( $my_query->have_posts() ):
@@ -542,7 +543,7 @@ function dimox_breadcrumbs(){
 		}
 		if ( get_query_var('paged') ) {
 			if ( is_category() || is_day() || is_month() || is_year() || is_search() || is_tag() || is_author() ) echo ' (';
-			echo __('Page') . ' ' . get_query_var('paged');
+			echo __('Trang') . ' ' . get_query_var('paged');
 			if ( is_category() || is_day() || is_month() || is_year() || is_search() || is_tag() || is_author() ) echo ')';
 		}
 		echo '</div>';
@@ -781,7 +782,19 @@ function get_box_category_home($cat_slug, $title='', $img_size='600px'){
 		if(empty($title)) $title= $cat->name;
 		$desc = '<p>'.$cat->description.'</p>';
 		$cat_resize_img = aq_resize($cat->img_data['img'],$img_size,null, true);
-		$cat_img = '<a class="pull-left" href="/'.$cat->slug.'" title="'.$title.'"><img class="img-responsive" src="'.$cat_resize_img.'" alt="'.$title.'"> </a>';
+		//$cat_img = '<a class="pull-left" href="/'.$cat->slug.'" title="'.$title.'"><img class="img-responsive" src="'.$cat_resize_img.'" alt="'.$title.'"> </a>';
+		$cat_img .= '<div class="mix-inner">';
+		$cat_img .= '<img src="'.$cat_resize_img.'" class="img-responsive" alt="Gallery" />';
+		$cat_img .= '		<div class="mix-details">';
+		$cat_img .= '		<h4>&nbsp;</h4>';
+		$cat_img .= '			<a class="mix-link" href="/'.$cat->slug.'">';
+		$cat_img .= '				<i class="fa fa-link"></i>';
+		$cat_img .= '			</a>';
+		$cat_img .= '		<a class="mix-preview fancybox-button" href="'.$cat_resize_img.'" title="'.$title.'" data-rel="fancybox-button">';
+		$cat_img .= '			<i class="fa fa-search"></i>';
+		$cat_img .= '		</a>';
+		$cat_img .= '		</div>';
+		$cat_img .= '</div>';
 		$retVal = array('img'=> $cat_img, 'title' =>$title, 'desc'=> $desc);
 		return $retVal;
 	}
@@ -869,7 +882,7 @@ function get_post_by_cat_theme1($args, $title) {
                 $postview_query->the_post(); 
 				$post = get_post($postview_query->ID);
 	?>
-			<div class="col-md-6 ">
+			<div class="col-md-6 fadeInUp animated go">
 				<div class="portlet eye-box-cat ">
 						<div class="portlet-title">
 							<?php 
@@ -1100,3 +1113,226 @@ function save_extra_category_fileds( $term_id ) {
 	}
 }
 
+
+
+if ( ! function_exists( 'get_pqh_post_gallery' ) ) :
+
+function get_pqh_post_gallery($postID = 0, $numberposts = -1, $post_mime_type='image') {
+	$args = array(
+			'numberposts' => $numberposts, // Using -1 loads all posts
+			'orderby' => 'menu_order', // This ensures images are in the order set in the page media manager
+			'order'=> 'ASC',
+			'post_mime_type' => $post_mime_type, // Make sure it doesn't pull other resources, like videos
+			'post_parent'=> $postID,// Important part - ensures the associated images are loaded
+			'post_status' => 'any',
+			'post_type' => 'attachment'
+	);
+	$images = new WP_Query( $args );
+	return $images;
+}
+
+endif;
+
+
+
+if ( ! function_exists( 'pqh_gallery' ) ) {
+	function pqh_gallery() {
+
+		// Set UI labels for Custom Post Type
+		$labels = array(
+				'name'                => _x( 'Gallery', 'Post Type General Name', 'pqheyedoctor' ),
+				'singular_name'       => _x( 'Gallery', 'Post Type Singular Name', 'pqheyedoctor' ),
+				'menu_name'           => __( 'Gallery', 'pqheyedoctor' ),
+				'parent_item_colon'   => __( 'Parent Gallery', 'td1pqheyedoctor501' ),
+				'all_items'           => __( 'All Gallery', 'pqheyedoctor' ),
+				'view_item'           => __( 'View Gallery', 'pqheyedoctor' ),
+				'add_new_item'        => __( 'Add New Gallery', 'pqheyedoctor' ),
+				'add_new'             => __( 'Add New', 'pqheyedoctor' ),
+				'edit_item'           => __( 'Edit Gallery', 'pqheyedoctor' ),
+				'update_item'         => __( 'Update Gallery', 'pqheyedoctor' ),
+				'search_items'        => __( 'Search Gallery', 'pqheyedoctor' ),
+				'not_found'           => __( 'Not Found', 'pqheyedoctor' ),
+				'not_found_in_trash'  => __( 'Not found in Trash', 'pqheyedoctor' ),
+		);
+
+		// Set other options for Custom Post Type
+
+		$args = array(
+				'label'               => __( 'gallery', 'pqheyedoctor' ),
+				'description'         => __( 'Gallery news and reviews', 'pqheyedoctor' ),
+				'labels'              => $labels,
+				// Features this CPT supports in Post Editor
+				'supports'            => array( 'title', 'editor', 'excerpt', 'thumbnail'),
+				// You can associate this CPT with a taxonomy or custom taxonomy.
+				'taxonomies'          => array( 'gallery' ),
+				/* A hierarchical CPT is like Pages and can have
+				 * Parent and child items. A non-hierarchical CPT
+		* is like Posts.
+		*/
+				'hierarchical'        => false,
+				'public'              => true,
+				'show_ui'             => true,
+				'show_in_menu'        => true,
+				'show_in_nav_menus'   => true,
+				'show_in_admin_bar'   => true,
+				'menu_position'       => 5,
+				'can_export'          => true,
+				'has_archive'         => true,
+				'exclude_from_search' => false,
+				'publicly_queryable'  => true,
+				'capability_type'     => 'page',
+		);
+
+		// Registering your Custom Post Type
+		register_post_type( 'gallery', $args );
+
+	}
+
+	/* Hook into the 'init' action so that the function
+	 * Containing our post type registration is not
+	 * unnecessarily executed.
+	 */
+
+	add_action( 'init', 'pqh_gallery', 7 );
+}
+if ( ! function_exists( 'get_pqh_gallery' ) ) {
+	function get_pqh_gallery( $num =-1, $slug='' ) {
+		// set the query arguments
+		$query_args = array(
+				// show all posts matching this query
+				'posts_per_page'    =>   $num,
+				'post_type'         =>   'gallery',
+				'order'=> 'DESC',
+				'orderby' => 'date'
+		);
+		if(!empty($slug)){
+			$query_args['name'] =  $slug;
+		}
+		// get the posts with our query arguments
+		$output = get_posts( $query_args );
+		return $output;
+	}
+
+}
+/**
+* Wiget Gallery
+*
+*/
+function add_gallery_widget() {
+	register_widget( 'gallery_widget' );
+}
+add_action( 'widgets_init', 'add_gallery_widget' );
+
+class gallery_widget extends WP_Widget {
+
+	function __construct() {
+		parent::__construct(
+				'post_gallery',
+				'PQH Gallery',
+				array( 'description'  =>  'Widget hiển thị gallery' )
+		);
+	}
+	/*
+	 * Tạo form điền tham số cho widget
+	 * ở đây ta có 3 form là title, postnum (số lượng bài) và postdate (tuổi của bài
+	 */
+	function form($instance) {
+		$default = array(
+				'title' => 'Gallery',
+				'postnum' => 5
+		);
+		$instance = wp_parse_args( (array) $instance, $default );
+		$title = esc_attr( $instance['title'] );
+		$postnum = esc_attr( $instance['postnum'] );
+
+		echo "<label>Tiêu đề:</label> <input class='widefat' type='text' name='".$this->get_field_name('title')."' value='".$title."' />";
+		echo "<label>Số lượng bài viết:</label> <input class='widefat' type='number' name='".$this->get_field_name('postnum')."' value='".$postnum."' />";
+	}
+
+	/*
+	 * Cập nhật dữ liệu nhập vào form tùy chọn trong database
+	 */
+	function update($new_instance, $old_instance) {
+		$instance = $old_instance;
+		$instance['title'] = strip_tags($new_instance['title']);
+		$instance['postnum'] = strip_tags($new_instance['postnum']);
+		return $instance;
+	}
+
+	function widget($args, $instance) {
+		global $postdate; // Thiết lập biến $postdate là biến toàn cục để dùng ở hàm filter_where
+		extract( $args );
+		$title = apply_filters( 'widget_title', $instance['title'] );
+		$postnum = $instance['postnum'];
+		$query_args = array(
+				'posts_per_page' => $postnum,
+				'orderby' => 'date',
+				'post_type' => 'gallery',
+				'order' => 'DESC'
+		);
+		
+		echo $before_widget;
+		echo '<div class="portlet box '.$bg_widget.' ">';
+		$postview_query = new WP_Query( $query_args );
+		if ($postview_query->have_posts() ) :
+		while ( $postview_query->have_posts() ) :
+		$postview_query->the_post();
+		echo '<div class="portlet-body">';
+		?>
+ 				<?php 
+ 				if ( get_post_gallery() ) :
+ 					?>
+ 					<div id="myCarousel" class="carousel image-carousel slide martop10">
+		 			<div class="carousel-inner ">
+ 					<?php 
+	 					$gallery = get_post_gallery( get_the_ID(), false );
+			            /* Loop through all the image and output them one by one */
+			        	$row = 0;
+			        	$active = '';
+			            foreach( $gallery['src'] as $src ) : 
+			            	if($row == 0){ $active = 'active' ;}
+			            	else{$active = '';}
+			            	
+			            	$url_resize_img = aq_resize($src,'600px', '400px', true);
+			            ?>
+								<div class="item <?php echo $active;?> mix-grid ">
+									<div class="col-lg-4 col-xs-4 col-md-4 col-sm-4  mix">
+										<div class="mix-inner">
+											<img src="<?php echo $url_resize_img; ?>" class="img-responsive" alt="Gallery" />
+											<div class="mix-details">
+												<h4>&nbsp;</h4>
+												<a class="mix-link" href="<?php the_permalink(); ?>">
+													<i class="fa fa-link"></i>
+												</a>
+												<a class="mix-preview fancybox-button" href="<?php echo $url_resize_img; ?>" title="<?php the_title(); ?>" data-rel="fancybox-button">
+												<i class="fa fa-search"></i>
+												</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							
+		                <?php
+			                $row ++;
+	 				endforeach;
+	 				?>
+	 				</div>
+						<!-- Carousel nav -->
+						<a class="carousel-control left" href="#myCarousel" data-slide="prev">
+						<i class="m-icon-big-swapleft m-icon-white"></i>
+						</a>
+						<a class="carousel-control right" href="#myCarousel" data-slide="next">
+						<i class="m-icon-big-swapright m-icon-white"></i>
+						</a>
+					</div>
+	 				<?php 
+ 				endif;
+ 				
+ 				?>
+			<?php echo '</div>';?>
+            <?php endwhile;
+            endif;
+            echo '</div>';
+            echo $after_widget;
+    }
+}
